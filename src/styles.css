@@ -171,7 +171,7 @@ main {
 .hero-media img {
   height: 100%;
   object-fit: cover;
-  opacity: 0.45;
+  opacity: 0.58;
   filter: saturate(0.86) contrast(1.12);
   transform: scale(1.04);
   animation: slow-drift 18s ease-in-out infinite alternate;
@@ -181,7 +181,7 @@ main {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(8, 8, 6, 0.94), rgba(8, 8, 6, 0.54) 48%, rgba(8, 8, 6, 0.82)),
+    linear-gradient(90deg, rgba(8, 8, 6, 0.88), rgba(8, 8, 6, 0.38) 48%, rgba(8, 8, 6, 0.72)),
     linear-gradient(0deg, #080806 0%, transparent 38%);
 }
 
@@ -193,6 +193,32 @@ main {
   height: min(58vh, 620px);
   opacity: 0.94;
   mix-blend-mode: screen;
+}
+
+.hero-product-strip {
+  position: absolute;
+  right: max(24px, calc((100vw - 1180px) / 2));
+  bottom: 178px;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(120px, 168px));
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid rgba(246, 241, 231, 0.18);
+  border-radius: 8px;
+  background: rgba(8, 8, 6, 0.64);
+  backdrop-filter: blur(18px);
+}
+
+.hero-product-strip img {
+  width: 100%;
+  height: 190px;
+  border-radius: 6px;
+  object-fit: cover;
+  opacity: 1;
+  filter: saturate(0.98) contrast(1.08);
+  animation: none;
+  transform: none;
 }
 
 .hero-content {
@@ -632,6 +658,16 @@ textarea:focus {
     height: 420px;
   }
 
+  .hero-product-strip {
+    right: 24px;
+    bottom: 174px;
+    grid-template-columns: repeat(2, minmax(92px, 130px));
+  }
+
+  .hero-product-strip img {
+    height: 138px;
+  }
+
   .metric-strip,
   .proof-band,
   .pillar-grid,
@@ -689,7 +725,7 @@ textarea:focus {
 
   .hero {
     padding: 94px 14px 14px;
-    min-height: 850px;
+    min-height: 940px;
   }
 
   h1 {
@@ -697,7 +733,18 @@ textarea:focus {
   }
 
   .hero-content {
-    padding-bottom: 280px;
+    padding-bottom: 360px;
+  }
+
+  .hero-product-strip {
+    left: 28px;
+    right: 28px;
+    bottom: 180px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero-product-strip img {
+    height: 148px;
   }
 
   .hero-actions,

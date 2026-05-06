@@ -105,6 +105,10 @@ export default function App() {
           <Suspense fallback={null}>
             <SignalScene />
           </Suspense>
+          <div className="hero-product-strip" aria-label="Real Orion product images from orionpda.org">
+            <img src="/assets/orion-hand.jpg" alt="Orion PDA held in hand" />
+            <img src="/assets/orion-pcb.jpg" alt="Orion PDA prototype circuit board" />
+          </div>
           <div className="hero-shade" />
         </div>
 
