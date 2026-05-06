@@ -187,12 +187,13 @@ main {
 
 .signal-scene {
   position: absolute;
-  top: 12%;
-  right: 4%;
-  width: min(46vw, 640px);
-  height: min(58vh, 620px);
-  opacity: 0.94;
+  top: 18%;
+  right: 9%;
+  width: min(30vw, 430px);
+  height: min(36vh, 360px);
+  opacity: 0.72;
   mix-blend-mode: screen;
+  pointer-events: none;
 }
 
 .hero-product-strip {
@@ -652,10 +653,11 @@ textarea:focus {
   }
 
   .signal-scene {
-    top: 42%;
-    right: -16%;
-    width: 92vw;
-    height: 420px;
+    top: 56%;
+    right: -8%;
+    width: 68vw;
+    height: 260px;
+    opacity: 0.48;
   }
 
   .hero-product-strip {

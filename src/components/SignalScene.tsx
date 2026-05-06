@@ -11,7 +11,7 @@ export function SignalScene() {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-    camera.position.set(0, 0, 8);
+    camera.position.set(0, 0, 7);
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -19,60 +19,66 @@ export function SignalScene() {
     mount.appendChild(renderer.domElement);
 
     const group = new THREE.Group();
+    group.rotation.set(-0.18, 0.38, -0.12);
     scene.add(group);
 
-    const particleCount = 170;
+    const ringMaterial = new THREE.LineBasicMaterial({
+      color: 0x79f5e5,
+      transparent: true,
+      opacity: 0.18
+    });
+
+    const rings: THREE.LineLoop[] = [];
+    [1.05, 1.5, 1.95].forEach((radius, index) => {
+      const ring = new THREE.LineLoop(
+        new THREE.BufferGeometry().setFromPoints(
+          new THREE.EllipseCurve(0, 0, radius, radius * 0.38, 0, Math.PI * 2, false, 0).getPoints(96)
+        ),
+        ringMaterial
+      );
+      ring.rotation.z = index * 0.38;
+      rings.push(ring);
+      group.add(ring);
+    });
+
+    const coreGeometry = new THREE.CircleGeometry(0.08, 32);
+    const coreMaterial = new THREE.MeshBasicMaterial({
+      color: 0x79f5e5,
+      transparent: true,
+      opacity: 0.58
+    });
+    const core = new THREE.Mesh(coreGeometry, coreMaterial);
+    group.add(core);
+
+    const particleCount = 54;
     const positions = new Float32Array(particleCount * 3);
     for (let index = 0; index < particleCount; index += 1) {
-      const angle = index * 0.44;
-      const radius = 1.2 + (index % 19) * 0.085;
+      const angle = (index / particleCount) * Math.PI * 2;
+      const radius = 1.15 + (index % 3) * 0.36;
       positions[index * 3] = Math.cos(angle) * radius;
-      positions[index * 3 + 1] = Math.sin(angle * 0.72) * 1.45;
-      positions[index * 3 + 2] = Math.sin(angle) * radius * 0.42;
+      positions[index * 3 + 1] = Math.sin(angle) * radius * 0.38;
+      positions[index * 3 + 2] = (index % 5) * 0.012;
     }
 
     const pointGeometry = new THREE.BufferGeometry();
     pointGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const pointMaterial = new THREE.PointsMaterial({
-      color: 0x75f4e6,
-      size: 0.035,
+      color: 0xf3b45a,
+      size: 0.026,
       transparent: true,
-      opacity: 0.78
+      opacity: 0.46
     });
     group.add(new THREE.Points(pointGeometry, pointMaterial));
 
-    const linePositions: number[] = [];
-    for (let index = 0; index < particleCount - 8; index += 4) {
-      linePositions.push(
-        positions[index * 3],
-        positions[index * 3 + 1],
-        positions[index * 3 + 2],
-        positions[(index + 8) * 3],
-        positions[(index + 8) * 3 + 1],
-        positions[(index + 8) * 3 + 2]
-      );
-    }
-
-    const lineGeometry = new THREE.BufferGeometry();
-    lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
-    const lineMaterial = new THREE.LineBasicMaterial({
-      color: 0xf6b95b,
-      transparent: true,
-      opacity: 0.18
-    });
-    group.add(new THREE.LineSegments(lineGeometry, lineMaterial));
-
-    const frame = new THREE.Mesh(
-      new THREE.BoxGeometry(1.55, 2.55, 0.12),
-      new THREE.MeshBasicMaterial({
-        color: 0xffffff,
-        wireframe: true,
+    const sweep = new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), new THREE.Vector3(2.05, 0, 0)]),
+      new THREE.LineBasicMaterial({
+        color: 0xf3b45a,
         transparent: true,
-        opacity: 0.22
+        opacity: 0.28
       })
     );
-    frame.rotation.set(0.2, -0.5, -0.08);
-    group.add(frame);
+    group.add(sweep);
 
     const resize = () => {
       const { width, height } = mount.getBoundingClientRect();
@@ -87,9 +93,13 @@ export function SignalScene() {
     let animationFrame = 0;
     const animate = () => {
       if (!reduceMotion) {
-        group.rotation.y += 0.0038;
-        group.rotation.x = Math.sin(Date.now() * 0.00028) * 0.12;
-        frame.rotation.z += 0.0016;
+        const time = Date.now() * 0.001;
+        group.rotation.z += 0.0014;
+        rings.forEach((ring, index) => {
+          ring.scale.setScalar(1 + Math.sin(time * 0.65 + index) * 0.028);
+        });
+        coreMaterial.opacity = 0.42 + Math.sin(time * 1.4) * 0.12;
+        sweep.rotation.z -= 0.006;
       }
       renderer.render(scene, camera);
       animationFrame = window.requestAnimationFrame(animate);
@@ -99,16 +109,15 @@ export function SignalScene() {
     return () => {
       window.cancelAnimationFrame(animationFrame);
       window.removeEventListener('resize', resize);
+      rings.forEach((ring) => ring.geometry.dispose());
+      ringMaterial.dispose();
+      coreGeometry.dispose();
+      coreMaterial.dispose();
       pointGeometry.dispose();
       pointMaterial.dispose();
-      lineGeometry.dispose();
-      lineMaterial.dispose();
-      frame.geometry.dispose();
-      if (Array.isArray(frame.material)) {
-        frame.material.forEach((material) => material.dispose());
-      } else {
-        frame.material.dispose();
-      }
+      sweep.geometry.dispose();
+      if (Array.isArray(sweep.material)) sweep.material.forEach((material) => material.dispose());
+      else sweep.material.dispose();
       renderer.dispose();
       renderer.domElement.remove();
     };
