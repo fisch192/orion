@@ -119,8 +119,7 @@ export default function App() {
           </p>
           <h1>Orion PDA</h1>
           <p className="hero-copy">
-            The pocket computer for people who think, write, listen, build, and move faster
-            than their phone allows.
+            The pocket computer for people who think, write, listen, build.
           </p>
           <div className="hero-actions">
             <a className="button primary" href="#order">
