@@ -171,7 +171,6 @@ main {
 .hero-media img {
   height: 100%;
   object-fit: cover;
-  object-position: 58% center;
   opacity: 0.58;
   filter: saturate(0.86) contrast(1.12);
   transform: scale(1.04);
@@ -725,26 +724,22 @@ textarea:focus {
   }
 
   .hero {
-    padding: 154px 14px 14px;
-    min-height: 980px;
-  }
-
-  .hero-media img {
-    object-position: 62% center;
+    padding: 94px 14px 14px;
+    min-height: 940px;
   }
 
   h1 {
-    font-size: clamp(3.8rem, 23vw, 7rem);
+    font-size: clamp(4.1rem, 24vw, 7.5rem);
   }
 
   .hero-content {
-    padding-bottom: 318px;
+    padding-bottom: 360px;
   }
 
   .hero-product-strip {
     left: 28px;
     right: 28px;
-    bottom: 156px;
+    bottom: 180px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 

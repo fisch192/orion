@@ -101,16 +101,13 @@ export default function App() {
 
       <section className="hero" id="top">
         <div className="hero-media" aria-label="Orion PDA product">
-          <img
-            src="/assets/orion-lifestyle-work.png"
-            alt="Orion PDA working beside a laptop on a wooden table"
-          />
+          <img src="/assets/orion-hero.jpg" alt="Orion PDA device on a warm desk surface" />
           <Suspense fallback={null}>
             <SignalScene />
           </Suspense>
-          <div className="hero-product-strip" aria-label="Orion prototype detail images">
-            <img src="/assets/orion-shell-lab.png" alt="Closed Orion PDA shell in a lab" />
-            <img src="/assets/orion-board-lab.png" alt="Orion PDA prototype circuit board in a lab" />
+          <div className="hero-product-strip" aria-label="Real Orion product images from orionpda.org">
+            <img src="/assets/orion-hand.jpg" alt="Orion PDA held in hand" />
+            <img src="/assets/orion-pcb.jpg" alt="Orion PDA prototype circuit board" />
           </div>
           <div className="hero-shade" />
         </div>
@@ -173,21 +170,21 @@ export default function App() {
 
       <section className="device-story">
         <div className="device-image tall">
-          <img src="/assets/orion-shell-lab.png" alt="Closed Orion PDA industrial shell in a lab" />
+          <img src="/assets/orion-hand.jpg" alt="Orion PDA held in hand" />
         </div>
         <div className="story-panel">
           <p className="eyebrow">
             <Zap size={16} aria-hidden="true" />
             Built for repeat daily use
           </p>
-          <h2>A physical product story investors can understand in one glance.</h2>
+          <h2>Not another screen. A dedicated command surface.</h2>
           <p>
-            The new visual set makes the prototype feel tangible: a closed pocketable shell,
-            a working board architecture, and a real mobile work context. It supports the
-            pitch that Orion is not another app, but a dedicated command surface.
+            Capture voice, draft text, control small automations, take field notes, and
+            keep your attention pointed at the work. The product story is simple: phones
+            became marketplaces for attention. Orion is a device for agency.
           </p>
           <div className="check-list">
-            {['Pocketable shell', 'Visible hardware depth', 'Investor-ready narrative'].map((item) => (
+            {['Pocketable', 'Developer-friendly', 'Investor-ready narrative'].map((item) => (
               <span key={item}>
                 <Check size={16} aria-hidden="true" />
                 {item}
@@ -196,7 +193,7 @@ export default function App() {
           </div>
         </div>
         <div className="device-image board">
-          <img src="/assets/orion-board-lab.png" alt="Orion PDA board and battery prototype" />
+          <img src="/assets/orion-pcb.jpg" alt="Orion PDA circuit board prototype" />
         </div>
       </section>
 
